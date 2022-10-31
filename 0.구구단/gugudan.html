@@ -11,21 +11,6 @@
 <div id="root"></div>
 <script type="text/babel">
     class GuGuDan extends React.Component {
-        <!-- 실무에서 잘 사용하지 않는 방식 -->
-        /*
-        constructor(props) {
-            super(props);
-
-            this.state = {
-                first: Math.ceil(Math.random() * 9),
-                second: Math.ceil(Math.random() * 9),
-                value: '',
-                result: '',
-            };
-        }
-        */
-
-        <!-- 실무에서 주로 사용하는 방식 -->
         state = {
             first: Math.ceil(Math.random() * 9),
             second: Math.ceil(Math.random() * 9),
@@ -37,11 +22,13 @@
             e.preventDefault();
 
             if (parseInt(this.state.value) === this.state.first * this.state.second) {
-                this.setState({
-                    result: this.state.value + ' 정답',
-                    first: Math.ceil(Math.random() * 9),
-                    second: Math.ceil(Math.random() * 9),
-                    value: '',
+                this.setState((prevState) => {
+                    return {
+                        result: '정답:' + prevState.value,
+                        first: Math.ceil(Math.random() * 9),
+                        second: Math.ceil(Math.random() * 9),
+                        value: '',
+                    }
                 })
             } else {
                 this.setState({
