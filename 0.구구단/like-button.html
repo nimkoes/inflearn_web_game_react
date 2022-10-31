@@ -10,27 +10,28 @@
 <!--<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>-->
 <!--<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>-->
 <script>
-  'use strict';
+    'use strict';
 
-  const e = React.createElement;
+    const e = React.createElement;
 
-  class LikeButton extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {liked: false};
+    class LikeButton extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {liked: false};
+        }
+
+        render() {
+            if (this.state.liked) {
+                return 'You liked this.';
+            }
+
+            return e('button', {onClick: () => this.setState({liked: true})}, 'Like');
+        }
     }
-    render() {
-      if (this.state.liked) {
-        return 'You liked this.';
-      }
-
-      return e('button', {onClick: () => this.setState({liked: true})}, 'Like');
-    }
-  }
 </script>
 <script>
-  // Component 를 화면에 그리는 작업
-  ReactDOM.createRoot(document.querySelector('#root')).render(e(LikeButton));
+    // Component 를 화면에 그리는 작업
+    ReactDOM.createRoot(document.querySelector('#root')).render(e(LikeButton));
 </script>
 </body>
 </html>
