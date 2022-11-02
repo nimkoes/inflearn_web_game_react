@@ -7,12 +7,23 @@ module.exports = {
     devtool: 'eval',
 
     resolve: {
-        extensions: ['.js', '/jsx'],
+        extensions: ['.js', '.jsx'],
     },
 
     // 입력
     entry: {
         app: ['./client'],
+    },
+
+    module: {
+        rules: [{
+            test: /\.jsx?/,
+            loader: 'babel-loader',
+            options: {
+                presets: ['@babel/preset-env', '@babel/preset-react'],
+                plugins: ['@babel/plugin-proposal-class-properties'],
+            }
+        }],
     },
 
     // 출력
