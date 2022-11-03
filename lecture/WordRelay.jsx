@@ -1,13 +1,51 @@
-const React = require('react');  // npm ¿¡¼­ react ¸¦ ºÒ·¯¿À´Â °ÍÀ¸·Î ²À ÇÊ¿äÇÑ ºÎºĞ
+const React = require('react');  // npm ì—ì„œ react ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” ê²ƒìœ¼ë¡œ ê¼­ í•„ìš”í•œ ë¶€ë¶„
 const {Component} = React;
 
 class WordRelay extends Component {
     state = {
-        text: 'Hello, webpack',
+        word: 'ê°ì',
+        value: '',
+        result: '',
+    };
+
+    onSubmitForm = (e) => {
+        e.preventDefault();
+
+        if (this.state.word[this.state.word.length - 1] === this.state.value[0]) {
+            this.setState({
+                result: 'ë”©ë™ë…',
+                word: this.state.value,
+                value: '',
+            });
+        } else {
+            this.setState({
+                result: 'ë•¡',
+                value: '',
+            });
+        }
+        this.input.focus();
+    };
+
+    onChangeInput = (e) => {
+        this.setState({value: e.target.value});
+    };
+
+    input;
+    onRefInput = (c) => {
+        this.input = c;
     };
 
     render() {
-        return <h1>{this.state.text}</h1>
+        return (
+            <>
+                <div>{this.state.word}</div>
+                <form onSubmit={this.onSubmitForm}>
+                    <input ref={this.onRefInput} value={this.state.value} onChange={this.onChangeInput}/>
+                    <button>ì…ë ¥!</button>
+                </form>
+                <div>{this.state.result}</div>
+            </>
+        )
     }
 }
 
