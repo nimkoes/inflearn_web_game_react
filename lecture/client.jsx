@@ -1,6 +1,6 @@
 const React = require('react');
 const ReactDom = require('react-dom');
 
-const WordRelay = require('./WordRelay');   // ./WordRelay.jsx ¿¡¼­ module.exports Çß±â ¶§¹®¿¡ °¡´ÉÇÑ ¹®Àå
+const WordRelay = require('./WordRelay');   // ./WordRelay.jsx ì—ì„œ module.exports í–ˆê¸° ë•Œë¬¸ì— ê°€ëŠ¥í•œ ë¬¸ì¥
 
 ReactDom.render(<WordRelay/>, document.querySelector('#root'));

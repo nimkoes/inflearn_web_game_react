@@ -3,7 +3,7 @@ const {Component} = React;
 
 class WordRelay extends Component {
     state = {
-        word: '감자',
+        word: '감자자',
         value: '',
         result: '',
     };
