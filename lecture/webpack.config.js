@@ -1,16 +1,16 @@
 const path = require('path');
-// -> node ¿¡¼­ °æ·Î Á¶ÀÛÀ» ÇÏ±â À§ÇØ ±âº» Á¦°øÇÏ´Â °Í
+// -> node ì—ì„œ ê²½ë¡œ ì¡°ì‘ì„ í•˜ê¸° ìœ„í•´ ê¸°ë³¸ ì œê³µí•˜ëŠ” ê²ƒ
 
 module.exports = {
-    name: 'word-relay-setting', // À¥ÆÑ ¼³Á¤ÀÇ ÀÌ¸§ : ¹«¾ùÀ» À§ÇÑ ¼³Á¤ÀÎÁö ¸í½Ã
-    mode: 'development',        // ¿î¿µ È¯°æ¿¡¼­´Â 'production' À¸·Î º¯°æ
+    name: 'word-relay-setting', // ì›¹íŒ© ì„¤ì •ì˜ ì´ë¦„ : ë¬´ì—‡ì„ ìœ„í•œ ì„¤ì •ì¸ì§€ ëª…ì‹œ
+    mode: 'development',        // ìš´ì˜ í™˜ê²½ì—ì„œëŠ” 'production' ìœ¼ë¡œ ë³€ê²½
     devtool: 'eval',
 
     resolve: {
         extensions: ['.js', '.jsx'],
     },
 
-    // ÀÔ·Â
+    // ì…ë ¥
     entry: {
         app: ['./client'],
     },
@@ -22,8 +22,8 @@ module.exports = {
             options: {
                 presets: [
                     ['@babel/preset-env', {
-                        targets: {  // ÀÚµ¿À¸·Î ¿¾³¯ ºê¶ó¿ìÀú¸¦ Áö¿øÇØÁÖ´Â °ÍÀÎµ¥, ±× ¼³Á¤À» º¸´Ù ÀÚ¼¼È÷ ÇÒ ¼ö ÀÖÀ½
-                            browsers: ['> 5% in KR', 'last 2 chrome version'],  // ÃÖ±Ù 2°³ ¹öÀüÀÇ chrome ±îÁö¸¸ È£È¯
+                        targets: {  // ìë™ìœ¼ë¡œ ì˜›ë‚  ë¸Œë¼ìš°ì €ë¥¼ ì§€ì›í•´ì£¼ëŠ” ê²ƒì¸ë°, ê·¸ ì„¤ì •ì„ ë³´ë‹¤ ìì„¸íˆ í•  ìˆ˜ ìˆìŒ
+                            browsers: ['> 5% in KR', 'last 2 chrome version'],  // ìµœê·¼ 2ê°œ ë²„ì „ì˜ chrome ê¹Œì§€ë§Œ í˜¸í™˜
                         },
                         debug: true,
                     }],
@@ -34,11 +34,11 @@ module.exports = {
         }],
     },
 
-    // Ãâ·Â
+    // ì¶œë ¥
     output: {
         path: path.join(__dirname, 'dist'),
-        // path.join -> °æ·Î¸¦ ¾Ë¾Æ¼­ ÇÕÃÄ ÁØ´Ù
-        // __dirname -> webpack.config.js °¡ ÀÖ´Â lecture µğ·ºÅä¸® (ÇöÀç Æú´õ)
+        // path.join -> ê²½ë¡œë¥¼ ì•Œì•„ì„œ í•©ì³ ì¤€ë‹¤
+        // __dirname -> webpack.config.js ê°€ ìˆëŠ” lecture ë””ë ‰í† ë¦¬ (í˜„ì¬ í´ë”)
         filename: 'app.js',
     },
 };
