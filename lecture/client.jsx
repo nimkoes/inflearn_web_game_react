@@ -1,6 +1,9 @@
 const React = require('react');
 const ReactDom = require('react-dom');
+const {hot} = require('react-hot-loader/root');
 
-const WordRelay = require('./WordRelay');   // ./WordRelay.jsx 에서 module.exports 했기 때문에 가능한 문장
+const NumberBaseball = require('./NumberBaseball');
 
-ReactDom.render(<WordRelay/>, document.querySelector('#root'));
+const Hot = hot(NumberBaseball);
+
+ReactDom.render(<Hot/>, document.querySelector('#root'));
