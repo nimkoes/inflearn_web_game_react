@@ -1,16 +1,12 @@
 const React = require('react');
-const {Component} = require('react');
 
-class Try extends Component {
-    render() {
-        const {tryInfo} = this.props;
-        return (
-            <li>
-                <div>{tryInfo.try}</div>
-                <div>{tryInfo.result}</div>
-            </li>
-        );
-    }
+const Try = ({tryInfo}) => {    // 구조 분해 할당
+    return (
+        <li>
+            <div>{tryInfo.try}</div>
+            <div>{tryInfo.result}</div>
+        </li>
+    );
 }
 
 module.exports = Try;

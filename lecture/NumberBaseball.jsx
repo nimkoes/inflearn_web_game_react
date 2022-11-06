@@ -1,5 +1,5 @@
 const React = require('react');
-const {Component} = require('react');
+const {useState} = require('react');
 const Try = require('./Try');
 
 function getNumbers() {  // 숫자 네 개를 겹치지 않고 랜덤하게 뽑는 함수
@@ -13,32 +13,29 @@ function getNumbers() {  // 숫자 네 개를 겹치지 않고 랜덤하게 뽑�
     return array;
 }
 
-class NumberBaseball extends Component {
-    state = {
-        result: '',
-        value: '',
-        answer: getNumbers(),
-        tries: [],
-    }
+const NumberBaseball = () => {
 
-    onSubmitForm = (e) => {
+    // state 설정
+    const [result, setResult] = useState('');
+    const [value, setValue] = useState('');
+    const [answer, setAnswer] = useState(getNumbers);   // lazy init :: 값이 아닌 함수를 useState 에 할당 하는 경우
+    const [tries, setTries] = useState([]);
+
+
+    const onSubmitForm = (e) => {
         e.preventDefault();
-        const {answer, value, tries} = this.state;
 
         if (value === answer.join('')) {
-            this.setState((prevState) => {
-                return {
-                    result: '홈런!',
-                    tries: [...prevState.tries, {try: value, result: '홈런!'}],
-                };
+
+            setResult('홈런!');
+            setTries((prevTries) => {
+                return [...prevTries, {try: value, result: '홈런!'}];
             });
 
             alert('게임을 다시 시작 합니다!');
-            this.setState({
-                value: '',
-                answer: getNumbers(),
-                tries: [],
-            });
+            setValue('');
+            setAnswer(getNumbers());
+            setTries([]);
 
         } else {  // 답이 틀린 경우
             const answerArray = value.split('').map((v) => parseInt(v));
@@ -46,16 +43,13 @@ class NumberBaseball extends Component {
             let ball = 0;
 
             if (tries.length >= 9) {  // 10번 이상 틀렸을 때
-                this.setState({
-                    result: `10번 넘게 틀려서 실패! 답은 ${answer.join(',')} 였습니다!`,
-                });
+
+                setResult(`10번 넘게 틀려서 실패! 답은 ${answer.join(',')} 였습니다!`);
 
                 alert('게임을 다시 시작 합니다!');
-                this.setState({
-                    value: '',
-                    answer: getNumbers(),
-                    tries: [],
-                });
+                setValue('');
+                setAnswer(getNumbers());
+                setTries([]);
 
             } else {
                 for (let i = 0; i < 4; ++i) {
@@ -66,41 +60,35 @@ class NumberBaseball extends Component {
                     }
                 }
 
-                this.setState((prevState) => {
-                    return {
-                        tries: [...prevState.tries, {try: value, result: `${strike} 스트라이크, ${ball} 볼 입니다`}],
-                        value: '',
-                    };
-                });
+                setTries((prevTries) => {
+                    return [...prevTries, {try: value, result: `${strike} 스트라이크, ${ball} 볼 입니다`}];
+                })
+                setValue('');
             }
         }
     }
 
-    onChangeInput = (e) => {
-        this.setState({
-            value: e.target.value,
-        });
+    const onChangeInput = (e) => {
+        setValue(e.target.value);
     }
 
-    render() {
-        const {result, value, tries} = this.state;
-        return (
-            <>
-                <h1>{result}</h1>
-                <form onSubmit={this.onSubmitForm}>
-                    <input maxLength={4} value={value} onChange={this.onChangeInput}/>
-                </form>
-                <div>시도 : {tries.length}</div>
-                <ul>
-                    {tries.map((v, i) => {
-                        return (
-                            <Try key={`${i + 1} 차 시도 :`} tryInfo={v}/>  // value, index 를 props 라고 부름
-                        );
-                    })}
-                </ul>
-            </>
-        );
-    }
+
+    return (
+        <>
+            <h1>{result}</h1>
+            <form onSubmit={onSubmitForm}>
+                <input maxLength={4} value={value} onChange={onChangeInput}/>
+            </form>
+            <div>시도 : {tries.length}</div>
+            <ul>
+                {tries.map((v, i) => {
+                    return (
+                        <Try key={`${i + 1} 차 시도 :`} tryInfo={v}/>  // value, index 를 props 라고 부름
+                    );
+                })}
+            </ul>
+        </>
+    );
 }
 
 module.exports = NumberBaseball;
