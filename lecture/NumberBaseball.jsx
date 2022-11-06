@@ -6,19 +6,35 @@ function getNumbers() {  // 숫자 네 개를 겹치지 않고 랜덤하게 뽑�
 }
 
 class NumberBaseball extends Component {
+    /*
+    constructor(props) {
+        super(props);
+        this.state = {
+            result: '',
+            value: '',
+            answer: getNumbers(),
+            tries: [],
+        }
+        this.onSubmitForm = this.onSubmitForm.bind(this);
+        this.onChangeInput = this.onChangeInput.bind(this);
+    }
+    */
+
     state = {
         result: '',
         value: '',
         answer: getNumbers(),
         tries: [],
-    };
-
-    onSubmitForm = () => {
-
     }
 
-    onChangeInput = () => {
+    onSubmitForm = (e) => {
+        e.preventDefault();
+    }
 
+    onChangeInput = (e) => {
+        this.setState({
+            value: e.target.value,
+        });
     }
 
     fruits = [
@@ -42,7 +58,7 @@ class NumberBaseball extends Component {
                 <ul>
                     {this.fruits.map((v, i) => {
                         return (
-                            <Try value={v} index={i}/>  // value, index 를 props 라고 부름
+                            <Try key={v.fruit + v.taste} value={v} index={i}/>  // value, index 를 props 라고 부름
                         );
                     })}
                 </ul>
