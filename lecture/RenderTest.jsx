@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 
-class Test extends Component {
+class Test extends PureComponent {
     state = {
         counter: 0,
     };
@@ -8,14 +8,6 @@ class Test extends Component {
     onClick = () => {
         this.setState({});
     };
-
-    // 어떤 경우에 렌더링을 다시 할지 사용자가 지정 해주는 부분
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        if (this.state.counter !== nextState.counter) {
-            return true;
-        }
-        return false;
-    }
 
     render() {
         console.log('렌더링', this.state);
