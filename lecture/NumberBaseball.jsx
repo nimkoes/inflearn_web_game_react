@@ -14,20 +14,6 @@ function getNumbers() {  // 숫자 네 개를 겹치지 않고 랜덤하게 뽑�
 }
 
 class NumberBaseball extends Component {
-    /*
-    constructor(props) {
-        super(props);
-        this.state = {
-            result: '',
-            value: '',
-            answer: getNumbers(),
-            tries: [],
-        }
-        this.onSubmitForm = this.onSubmitForm.bind(this);
-        this.onChangeInput = this.onChangeInput.bind(this);
-    }
-    */
-
     state = {
         result: '',
         value: '',
@@ -40,9 +26,11 @@ class NumberBaseball extends Component {
         const {answer, value, tries} = this.state;
 
         if (value === answer.join('')) {
-            this.setState({
-                result: '홈런!',
-                tries: [...tries, {try: value, result: '홈런!'}],
+            this.setState((prevState) => {
+                return {
+                    result: '홈런!',
+                    tries: [...prevState.tries, {try: value, result: '홈런!'}],
+                };
             });
 
             alert('게임을 다시 시작 합니다!');
@@ -78,10 +66,12 @@ class NumberBaseball extends Component {
                     }
                 }
 
-                this.setState({
-                    tries: [...tries, {try: value, result: `${strike} 스트라이크, ${ball} 볼 입니다`}],
-                    value: '',
-                })
+                this.setState((prevState) => {
+                    return {
+                        tries: [...prevState.tries, {try: value, result: `${strike} 스트라이크, ${ball} 볼 입니다`}],
+                        value: '',
+                    };
+                });
             }
         }
     }
