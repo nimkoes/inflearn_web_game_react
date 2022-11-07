@@ -1,5 +1,5 @@
 const React = require('react');
-const {useState} = require('react');
+const {useState, useRef} = require('react');
 const Try = require('./Try');
 
 function getNumbers() {  // 숫자 네 개를 겹치지 않고 랜덤하게 뽑는 함수
@@ -20,6 +20,7 @@ const NumberBaseball = () => {
     const [value, setValue] = useState('');
     const [answer, setAnswer] = useState(getNumbers);   // lazy init :: 값이 아닌 함수를 useState 에 할당 하는 경우
     const [tries, setTries] = useState([]);
+    const inputRef = useRef(null);
 
 
     const onSubmitForm = (e) => {
@@ -66,6 +67,7 @@ const NumberBaseball = () => {
                 setValue('');
             }
         }
+        inputRef.current.focus();
     }
 
     const onChangeInput = (e) => {
@@ -77,7 +79,7 @@ const NumberBaseball = () => {
         <>
             <h1>{result}</h1>
             <form onSubmit={onSubmitForm}>
-                <input maxLength={4} value={value} onChange={onChangeInput}/>
+                <input ref={inputRef} maxLength={4} value={value} onChange={onChangeInput}/>
             </form>
             <div>시도 : {tries.length}</div>
             <ul>
