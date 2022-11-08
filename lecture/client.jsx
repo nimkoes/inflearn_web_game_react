@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDom = require('react-dom');
 
-const NumberBaseball = require('./ResponseCheck-class');
-// const NumberBaseball = require('./ResponseCheck');
+const ResponseCheck = require('./ResponseCheck-class');
+// const ResponseCheck = require('./ResponseCheck');
 
-ReactDom.createRoot(document.querySelector('#root')).render(<NumberBaseball/>);
+ReactDom.createRoot(document.querySelector('#root')).render(<ResponseCheck/>);
