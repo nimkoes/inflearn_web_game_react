@@ -55,7 +55,7 @@ class RSP extends Component {
         }
     };
 
-    onClickBtn = (choice) => {
+    onClickBtn = (choice) => () => {
         const {imgCoord} = this.state;
 
         // 잠시 interval 을 멈추고 가위바위보 결과를 보여주기 위함
@@ -87,7 +87,7 @@ class RSP extends Component {
 
         setTimeout(() => {
             this.interval = setInterval(this.changeHand, 100);
-        }, 2000);
+        }, 1000);
     };
 
     render() {
@@ -97,9 +97,9 @@ class RSP extends Component {
                 <div id="computer"
                      style={{background: `url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${imgCoord} 0`}}/>
                 <div>
-                    <button id="rock" className="btn" onClick={() => this.onClickBtn('바위')}>바위</button>
-                    <button id="scissor" className="btn" onClick={() => this.onClickBtn('가위')}>가위</button>
-                    <button id="paper" className="btn" onClick={() => this.onClickBtn('보')}>보</button>
+                    <button id="rock" className="btn" onClick={this.onClickBtn('바위')}>바위</button>
+                    <button id="scissor" className="btn" onClick={this.onClickBtn('가위')}>가위</button>
+                    <button id="paper" className="btn" onClick={this.onClickBtn('보')}>보</button>
                 </div>
                 <div>{result}</div>
                 <div>현재 {score}점</div>
