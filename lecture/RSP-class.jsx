@@ -8,6 +8,18 @@ class RSP extends Component {
         score: 0,
     };
 
+    // 컴포넌트가 첫 렌더링된 후, 여기에 비동기 요청을 많이 한다.
+    componentDidMount() {
+    }
+
+    // 리렌더링 후
+    componentDidUpdate(prevProps, prevState, snapshot) {
+    }
+
+    // 컴포넌트가 제거되기 직전, 비동기 요청 정리를 많이 한다.
+    componentWillUnmount() {
+    }
+
     render() {
         const {result, score, imgCoord} = this.state;
         return (
