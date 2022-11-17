@@ -1,6 +1,6 @@
 const React = require('react');
 const {useState, useRef, useEffect} = require('react');
-
+const useInterval = require('./useInterval');
 
 const rspCoords = {
     바위: '0',
@@ -24,17 +24,8 @@ const RSP = () => {
     const [result, setResult] = useState('');
     const [imgCoord, setImgCoord] = useState(rspCoords.바위);
     const [score, setScore] = useState(0);
-    const interval = useRef();
+    const [isRunning, setIsRunning] = useState(true);
 
-    // componentDidMount, componentDidUpdate 역할(1:1 대응은 아님)
-    useEffect(() => {
-        interval.current = setInterval(changeHand, 100);
-
-        // componentWillUnmount 역할을 하는 부분
-        return () => {
-            clearInterval(interval.current);
-        };
-    }, [imgCoord]);
 
     const changeHand = () => {
         if (imgCoord == rspCoords.바위) {
@@ -46,28 +37,33 @@ const RSP = () => {
         }
     };
 
+    useInterval(changeHand, isRunning ? 100 : null);
+
     const onClickBtn = (choice) => () => {
-        // 잠시 interval 을 멈추고 가위바위보 결과를 보여주기 위함
-        clearInterval(interval.current);
 
-        const myScore = scores[choice];
-        const cpuScore = scores[computerChoice(imgCoord)];
-        const diff = myScore - cpuScore;
+        if (isRunning) {
+            setIsRunning(false);
 
-        if (diff === 0) {
-            setResult('비겼습니다!');
-        } else if ([-1, 2].includes(diff)) {
-            setResult('이겼습니다!');
-            setScore((prevScore) => prevScore + 1);
-        } else {
-            setResult('졌습니다!');
-            setScore((prevScore) => prevScore - 1);
+            const myScore = scores[choice];
+            const cpuScore = scores[computerChoice(imgCoord)];
+            const diff = myScore - cpuScore;
+
+            if (diff === 0) {
+                setResult('비겼습니다!');
+            } else if ([-1, 2].includes(diff)) {
+                setResult('이겼습니다!');
+                setScore((prevScore) => prevScore + 1);
+            } else {
+                setResult('졌습니다!');
+                setScore((prevScore) => prevScore - 1);
+            }
+
+            setTimeout(() => {
+                setIsRunning(true);
+            }, 1000);
         }
+    };
 
-        setTimeout(() => {
-            interval.current = setInterval(changeHand, 100);
-        }, 1000);
-    }
 
     return (
         <>
