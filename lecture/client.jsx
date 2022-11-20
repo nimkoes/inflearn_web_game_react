@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDom = require('react-dom');
 
-// const RSP = require('./RSP-class');
-const RSP = require('./RSP');
+const Lotto = require('./Lotto-class');
+// const Lotto = require('./Lotto');
 
-ReactDom.createRoot(document.querySelector('#root')).render(<RSP/>);
+ReactDom.createRoot(document.querySelector('#root')).render(<Lotto/>);
