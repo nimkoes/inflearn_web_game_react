@@ -25,6 +25,18 @@ const Lotto = () => {
     const [redo, setRedo] = useState(false);
     const timeouts = useRef([]);
 
+    // componentDidMount 만 동작 하도록 선언
+    useEffect(() => {}, []);
+
+    // componentDidUpdate 단계만 실행 하고 싶은 경우 적용 해볼수 있는 패턴
+    const mounted = useRef(false);
+    useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+        }
+        // ajax call ...
+    }, [/*바뀌는 값*/]);
+
     useEffect(() => {
         for (let i = 0; i < winNumbers.length - 1; ++i) {
             timeouts.current[i] = setTimeout(() => {
