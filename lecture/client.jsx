@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDom = require('react-dom');
 
-// const Lotto = require('./Lotto-class');
-const Lotto = require('./Lotto');
+const TicTacToe = require('./TicTacToe-class');
+// const TicTacToe = require('./TicTacToe');
 
-ReactDom.createRoot(document.querySelector('#root')).render(<Lotto/>);
+ReactDom.createRoot(document.querySelector('#root')).render(<TicTacToe/>);
