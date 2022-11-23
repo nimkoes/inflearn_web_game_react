@@ -1,6 +1,6 @@
-const React = require('react');
-const ReactDom = require('react-dom');
+import React from 'react';
+import ReactDom from 'react-dom';
 
-const TicTacToe = require('./TicTacToe');
+import TicTacToe from './TicTacToe';
 
 ReactDom.createRoot(document.querySelector('#root')).render(<TicTacToe/>);
