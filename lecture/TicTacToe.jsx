@@ -15,8 +15,6 @@ export const RESET_GAME = 'RESET_GAME';
 
 // dispatch 될 때마다 실행하는 부분
 const reducer = (state, action) => {
-    console.log("====================");
-    console.log(state);
     switch (action.type) {
         case SET_WINNER:
             // state.winner = action.winner;  이렇게 하면 안됨.
