@@ -74,32 +74,56 @@ const reducer = (state, action) => {
             };
         case OPEN_CELL: {
             const tableData = [...state.tableData];
-            tableData[action.row] = [...state.tableData[action.row]];
-            tableData[action.row][action.cell] = CODE.OPENED;
+            tableData.forEach((row, i) => {
+                tableData[i] = [...row];
+            });
 
-            let around = [];
-            if (tableData[action.row - 1]) {
-                around = around.concat(
-                    tableData[action.row - 1][action.cell - 1],
-                    tableData[action.row - 1][action.cell],
-                    tableData[action.row - 1][action.cell + 1],
-                );
-            }
-            around = around.concat(
-                tableData[action.row][action.cell - 1],
-                tableData[action.row][action.cell + 1],
-            );
-            if (tableData[action.row + 1]) {
-                around = around.concat(
-                    tableData[action.row + 1][action.cell - 1],
-                    tableData[action.row + 1][action.cell],
-                    tableData[action.row + 1][action.cell + 1],
-                );
-            }
+            const checked = []; // 중복 검사 방지
+            const checkAround = (row, cell) => {
+                // 테이블 범위를 넘어가는 경우
+                if (row < 0 || row >= tableData.length || cell < 0 || cell >= tableData[0].length) return;
 
-            const count = around.filter((v) => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
-            tableData[action.row][action.cell] = count;
+                // 이미 열린 칸이거나 지뢰가 있는 칸인 경우
+                if ([CODE.OPENED, CODE.FLAG, CODE.FLAG_MINE, CODE.QUESTION, CODE.QUESTION_MINE].includes(tableData[row][cell])) return;
 
+                // 이미 검사한 경우
+                if (checked.includes(row + '/' + cell)) return;
+                else checked.push(row + '/' + cell);
+
+                let around = [tableData[row][cell - 1], tableData[row][cell + 1]];
+                if (tableData[row - 1]) {
+                    around = around.concat(tableData[row - 1][cell - 1], tableData[row - 1][cell], tableData[row - 1][cell + 1]);
+                }
+                if (tableData[row + 1]) {
+                    around = around.concat(tableData[row + 1][cell - 1], tableData[row + 1][cell], tableData[row + 1][cell + 1]);
+                }
+
+                const count = around.filter((v) => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
+
+                // 주변칸 열기
+                if (count === 0) {
+                    if (row > -1) {
+                        const near = [[row, cell - 1], [row, cell + 1]];
+                        if (row - 1 > -1) {
+                            near.push([row - 1, cell - 1]);
+                            near.push([row - 1, cell]);
+                            near.push([row - 1, cell + 1]);
+                        }
+                        if (row + 1 < tableData.length) {
+                            near.push([row + 1, cell - 1]);
+                            near.push([row + 1, cell]);
+                            near.push([row + 1, cell + 1]);
+                        }
+
+                        near.filter(v => !!v).forEach((n) => {
+                            if (tableData[n[0]][n[1]] !== CODE.OPENED) checkAround(n[0], n[1]);
+                        });
+                    }
+                }
+                tableData[row][cell] = count;
+            };
+
+            checkAround(action.row, action.cell);
             return {
                 ...state,
                 tableData,
