@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import MineSearch from './MineSearch';
+import SectionReact18 from './SectionReact18';
 
-ReactDom.createRoot(document.querySelector('#root')).render(<MineSearch/>);
+ReactDom.createRoot(document.querySelector('#root')).render(<SectionReact18/>);
