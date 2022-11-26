@@ -1,4 +1,4 @@
-import React, {useCallback, useContext} from 'react';
+import React, {memo, useCallback, useContext, useMemo} from 'react';
 import {CLICK_MINE, CODE, FLAG_CELL, NORMALIZE_CELL, OPEN_CELL, QUESTION_CELL, TableContext} from "./MineSearch";
 
 const getTdStyle = (code) => {
@@ -30,6 +30,7 @@ const getTdStyle = (code) => {
 };
 
 const getTdText = (code) => {
+    console.log("렌더링을 하면서 어떤 text 를 보여줄지 정하는 함수를 실행 합니다.");
     switch (code) {
         case CODE.NORMAL:
             return '';
@@ -48,7 +49,7 @@ const getTdText = (code) => {
     }
 };
 
-const Td = ({rowIndex, cellIndex}) => {
+const Td = memo(({rowIndex, cellIndex}) => {
     const {tableData, dispatch, halted} = useContext(TableContext);
 
 
@@ -96,11 +97,13 @@ const Td = ({rowIndex, cellIndex}) => {
         }
     }, [tableData[rowIndex][cellIndex]], halted);
 
-    return (
+    console.log("Td 함수 컴포넌트가 실행 되었습니다.");
+
+    return useMemo(() => (
         <td style={getTdStyle(tableData[rowIndex][cellIndex])} onClick={onClickTd} onContextMenu={onRightClickTd}>
             {getTdText(tableData[rowIndex][cellIndex])}
         </td>
-    );
-};
+    ), [tableData[rowIndex][cellIndex]]);
+});
 
 export default Td;
