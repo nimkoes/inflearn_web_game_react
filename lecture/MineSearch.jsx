@@ -16,7 +16,7 @@ export const CODE = {
 
 export const TableContext = createContext({
     tableData: [],
-    halted: false,
+    halted: true,
     dispatch: () => {
     },
 });   // default 값을 할당할 수 있다.
@@ -25,7 +25,7 @@ const initialState = {
     tableData: [],
     timer: 0,
     result: '',
-    halted: false,
+    halted: true,
 };
 
 // 지뢰를 심는 함수
@@ -70,11 +70,35 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 tableData: plantMine(action.row, action.cell, action.mine),
+                halted: false,
             };
         case OPEN_CELL: {
             const tableData = [...state.tableData];
             tableData[action.row] = [...state.tableData[action.row]];
             tableData[action.row][action.cell] = CODE.OPENED;
+
+            let around = [];
+            if (tableData[action.row - 1]) {
+                around = around.concat(
+                    tableData[action.row - 1][action.cell - 1],
+                    tableData[action.row - 1][action.cell],
+                    tableData[action.row - 1][action.cell + 1],
+                );
+            }
+            around = around.concat(
+                tableData[action.row][action.cell - 1],
+                tableData[action.row][action.cell + 1],
+            );
+            if (tableData[action.row + 1]) {
+                around = around.concat(
+                    tableData[action.row + 1][action.cell - 1],
+                    tableData[action.row + 1][action.cell],
+                    tableData[action.row + 1][action.cell + 1],
+                );
+            }
+
+            const count = around.filter((v) => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
+            tableData[action.row][action.cell] = count;
 
             return {
                 ...state,
